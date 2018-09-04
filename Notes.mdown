@@ -1,0 +1,152 @@
+### Drawer Navigator
+
+Download code from [here](https://github.com/AbdullahAlrayes/AppDrawerNavigator)
+
+1.  Install the following
+
+        yarn add react-navigation
+        yarn add native-base
+
+2.  Import the following in to `App.js`
+
+        import {
+        View,
+        SafeAreaView,
+        ScrollView,
+        Image
+        } from "react-native";
+        import { createDrawerNavigator, DrawerItems } from "react-navigation";
+
+3.  Create const `AppDrawerNavigator`
+
+        const AppDrawerNavigator = createDrawerNavigator(
+        {
+            Home: HomeScreen,
+            Settings: SettingScreen
+        },
+        {
+            contentOptions: {
+            activeTintColor: "orange"
+            }
+        }
+        );
+
+4.  Create Custom Component `CustomDrawerComponent` to be added to the side bar as following.This custom will help us to add picture profile and fixed the spacing
+
+        const CustomDrawerComponent = props => (
+        <SafeAreaView style={{ flex: 1 }}>
+            <View
+            style={{
+                height: 150,
+                backgroundColor: "white",
+                alignItems: "center",
+                justifyContent: "center"
+            }}
+            >
+            <Image
+                source={require("./abdullah.png")}
+                style={{ height: 120, width: 120, borderRadius: 60 }}
+            />
+            </View>
+            <ScrollView>
+            <DrawerItems {...props} />
+            </ScrollView>
+        </SafeAreaView>
+        );
+
+5.  Add the new `CustomDrawerComponent` to the `AppDrawerNavigator` as following
+
+        const AppDrawerNavigator = createDrawerNavigator(
+        {
+            Home: HomeScreen,
+            Settings: SettingScreen
+        },
+        {
+            contentComponent: CustomDrawerComponent,
+            contentOptions: {
+            activeTintColor: "orange"
+            }
+        }
+        );
+
+6.  Add `AppDrawerNavigator` to the render as following
+
+        export default class App extends React.Component {
+        render() {
+            return <AppDrawerNavigator />;
+        }
+        }
+
+7.  Create Now `Home` or any other pages you would like to add at sidebar
+
+        class HomeScreen extends Component {
+        render() {
+            return (
+            <View>
+                <Header>
+                <Left>
+                </Left>
+                </Header>
+                <Text>HomeScreen</Text>
+            </View>
+            );
+        }
+        }
+        export default HomeScreen;
+
+8.  Use the following add to add icons
+
+        static navigationOptions = {
+            drawerIcon: ({ tintColor }) => (
+            <Icon name="home" style={{ fontSize: 24, color: tintColor }} />
+            )
+        };
+
+9.  Use the following to add Menu button and function to open the side bar
+
+        render() {
+            return (
+            <View>
+                <Header>
+                <Left>
+                    <Icon
+                    name="menu"
+                    onPress={() => this.props.navigation.openDrawer()}
+                    />
+                </Left>
+                </Header>
+                <Text>HomeScreen</Text>
+            </View>
+            );
+        }
+        }
+
+10. Final code as following
+
+        import React, { Component } from "react";
+        import { View, Text } from "react-native";
+        import { Header, Left, Icon } from "native-base";
+
+        class HomeScreen extends Component {
+        static navigationOptions = {
+            drawerIcon: ({ tintColor }) => (
+            <Icon name="home" style={{ fontSize: 24, color: tintColor }} />
+            )
+        };
+        render() {
+            return (
+            <View>
+                <Header>
+                <Left>
+                    <Icon
+                    name="menu"
+                    onPress={() => this.props.navigation.openDrawer()}
+                    />
+                </Left>
+                </Header>
+                <Text>HomeScreen</Text>
+            </View>
+            );
+        }
+        }
+        export default HomeScreen;
